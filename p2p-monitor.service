@@ -1,0 +1,14 @@
+[Unit]
+Description=Binance P2P Price Monitor
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+WorkingDirectory=/home/theparkz/Projects/p2p-monitor
+ExecStart=/home/theparkz/Projects/p2p-monitor/.venv/bin/python main.py
+Restart=on-failure
+RestartSec=30
+
+[Install]
+WantedBy=default.target

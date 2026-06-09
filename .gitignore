@@ -1,0 +1,17 @@
+# Secrets y estado local
+.env
+state.json
+
+# Config local de Claude Code (tooling, se regenera)
+.claude/
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+
+# Logs
+logs/
+*.log
