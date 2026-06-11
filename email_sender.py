@@ -4,6 +4,7 @@ from __future__ import annotations
 import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
+from html import escape
 
 from loguru import logger
 
@@ -20,10 +21,10 @@ def _build_html(offers: list[Offer], min_price: float) -> str:
         <tr>
           <td style="padding:8px;border:1px solid #ddd;font-weight:bold;color:#d35400">{o.price:.3f}</td>
           <td style="padding:8px;border:1px solid #ddd">{o.min_amount:.0f} - {o.max_amount:.0f} {config.fiat}</td>
-          <td style="padding:8px;border:1px solid #ddd">{o.nickname}</td>
+          <td style="padding:8px;border:1px solid #ddd">{escape(o.nickname)}</td>
           <td style="padding:8px;border:1px solid #ddd">{o.finish_rate:.1f}%</td>
           <td style="padding:8px;border:1px solid #ddd">
-            <a href="{o.link}" style="background:#f0b90b;color:#000;padding:6px 12px;
+            <a href="{escape(o.link, quote=True)}" style="background:#f0b90b;color:#000;padding:6px 12px;
                text-decoration:none;border-radius:4px;font-weight:bold">Comprar</a>
           </td>
         </tr>"""
