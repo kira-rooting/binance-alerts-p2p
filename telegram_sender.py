@@ -9,6 +9,8 @@ Setup (2 min):
 """
 from __future__ import annotations
 
+from html import escape
+
 import requests
 from loguru import logger
 
@@ -28,15 +30,16 @@ def _api(method: str, **params) -> dict:
 
 
 def _build_text(offers: list[Offer], min_price: float) -> str:
-    """Mensaje en HTML (evita problemas de escape con nicknames)."""
+    """Mensaje en HTML. El apodo del anunciante viene de Binance y es texto libre
+    controlado por terceros, así que se escapa antes de incrustarlo en el HTML."""
     best = offers[0]
     lines = [
-        f"🔔 <b>{config.asset} a {min_price:.3f} {config.fiat}</b> — {config.bank_display_name}",
+        f"🔔 <b>{config.asset} a {min_price:.3f} {config.fiat}</b> — {escape(config.bank_display_name)}",
         f"Compra de {config.order_amount_usd:.0f} {config.fiat}",
         "",
         f"Mejor oferta: <b>{best.price:.3f}</b> "
         f"(límite {best.min_amount:.0f}-{best.max_amount:.0f} {config.fiat})",
-        f"Anunciante: {best.nickname} ({best.finish_rate:.1f}%)",
+        f"Anunciante: {escape(best.nickname)} ({best.finish_rate:.1f}%)",
     ]
     if len(offers) > 1:
         lines.append("")
